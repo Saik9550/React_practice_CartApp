@@ -24,15 +24,23 @@ class CartItem extends React.Component {
     //   qty:this.state.qty+1
     // })
 
+    //setState is Asynchronous
+    //Batching concept and batching is not applicable in caseof promises (module 9 managing state class)
+
     //setState method 2---if previous state required
+
+    //since setState is Asynchronous,if we want it to be sychronous we need to use callback
     this.setState((prevState)=>{
-      console.log(prevState);
+      console.log(this.state.qty);//onClick in the UI value be 2 but in the console it shows as 1 as setState is Asynchronous , our state may get updated later in time
       return {
 
       qty:prevState.qty+1
       }
-    })
+    },
+    ()=>{console.log(this.state.qty) //this will make sure our state is synchronous})}
   }
+  )
+}
 
   decreaseQuantity =()=>{
     this.setState((prevState)=>{
