@@ -13,9 +13,35 @@ class CartItem extends React.Component {
   }
 
   increaseQuantity=()=>{
-    console.log(this.state.qty);
+    // console.log(this.state.qty);
+    // writiting just the below code will change the value of the quantity but the react will not render our component after the state is changed
+    // to overcome this we use set state
 
-    this.state.qty=this.state.qty+1;
+    // this.state.qty=this.state.qty+1;
+
+    //setState method 1 of using
+    // this.setState({
+    //   qty:this.state.qty+1
+    // })
+
+    //setState method 2---if previous state required
+    this.setState((prevState)=>{
+      console.log(prevState);
+      return {
+
+      qty:prevState.qty+1
+      }
+    })
+  }
+
+  decreaseQuantity =()=>{
+    this.setState((prevState)=>{
+      if(prevState.qty>0){
+      return {
+        qty:prevState.qty-1
+      }
+    }
+    })
   }
 
   render() {
@@ -54,6 +80,7 @@ class CartItem extends React.Component {
               alt="decrease"
               className="action-icons"
               src="https://cdn-icons-png.flaticon.com/128/992/992683.png"
+              onClick={this.decreaseQuantity}
             />
             <img
               alt="delete"
