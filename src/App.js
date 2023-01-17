@@ -1,5 +1,6 @@
 import CartItem from "./CartItem"
 import showalert from "./showlaertbutton"
+import Cart from "./Cart"
 
 function App() {
   function onChangehandlingevent(e) {
@@ -8,6 +9,7 @@ function App() {
   return (
     <div className="App">
       <CartItem />
+      <Cart />
       <div>
         <button onClick={showalert}>Show Alert</button>
         <input onChange={onChangehandlingevent} />
