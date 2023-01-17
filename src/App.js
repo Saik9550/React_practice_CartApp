@@ -1,6 +1,7 @@
 import CartItem from "./CartItem"
 import showalert from "./showlaertbutton"
 import Cart from "./Cart"
+import Navbar from "./Navbar"
 
 function App() {
   function onChangehandlingevent(e) {
@@ -8,6 +9,7 @@ function App() {
   }
   return (
     <div className="App">
+      <Navbar/>
       <CartItem />
       <Cart />
       <div>
