@@ -8,6 +8,7 @@ class CartItem extends React.Component {
       title: "phone",
       qty: 1,
       img: "",
+      
     }
     // this.increaseQuantity=this.increaseQuantity.bind(this);(bind needs to be added to reference or we need to use arrow function as brlow)
   }
@@ -51,6 +52,8 @@ class CartItem extends React.Component {
     }
     })
   }
+
+ 
 
   render() {
     const { price, title, qty, img } = this.state
