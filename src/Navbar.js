@@ -1,14 +1,21 @@
-import React from 'react';
+import React from "react"
+
+// below is the functional Component
+// usually functional components will have props as asrgument
 
 const Navbar = (props) => {
   return (
     <div style={styles.nav}>
       <div style={styles.cartIconContainer}>
-        <img style={styles.cartIcon} src="https://cdn-icons-png.flaticon.com/128/1170/1170678.png" alt="cart-icon" />
-        <span style={styles.cartCount}>3</span>
+        <img
+          style={styles.cartIcon}
+          src="https://cdn-icons-png.flaticon.com/128/1170/1170678.png"
+          alt="cart-icon"
+        />
+        <span style={styles.cartCount}>{props.count}</span>
       </div>
     </div>
-  );
+  )
 }
 
 const styles = {
@@ -36,5 +43,4 @@ const styles = {
   }
 };
 
-
-export default Navbar;
+export default Navbar

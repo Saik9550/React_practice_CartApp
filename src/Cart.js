@@ -7,8 +7,8 @@ import CartItem2 from './CartItem2';
 // Component to understand props and props are used in cartitem2
 // props are nothing but like parameters of a function
 
-class Cart extends React.Component{
-
+const Cart=(props)=>{
+{/*
     constructor(){
         super();
         this.state = {
@@ -73,9 +73,9 @@ handleDeleteProduct=(id)=>{
     products:items
   })
 }
+*/}
 
-render(){
-    const { products } = this.state;
+    const { products } = props;
     return (
       <div className="cart">
         {products.map((product) => {
@@ -83,16 +83,19 @@ render(){
             <CartItem2
               product={product} //way of passing props
               key={product.id}//keys are like way of distinguishing each value of products
-              onIncreaseQuantity={this.handleIncreaseQuantity}
-              onDecreaseQuantity={this.handleDecreaseQuantity}
-              onDeleteProduct={this.handleDeleteProduct}
+              onIncreaseQuantity={props.onIncreaseQuantity}
+              onDecreaseQuantity={props.onDecreaseQuantity}
+              onDeleteProduct={props.onDeleteProduct}
             />
           )
-        })}
+        }
+        
+        )
+        }
       </div>
     );
 }
 
-}
+
 
 export default Cart;
