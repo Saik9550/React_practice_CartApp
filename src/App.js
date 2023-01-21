@@ -3,7 +3,9 @@ import showalert from "./showlaertbutton"
 import Cart from "./Cart"
 import Navbar from "./Navbar"
 import React from "react"
-import firebase from 'firebase'
+// import * as firebase from 'firebase';
+import  firebase from 'firebase/compat/app';
+import 'firebase/compat/firestore';
 
 // Note:since navbar and cart are siblings and props can only be passed from parents to children but not siblings
 // and we want the cart value in navbar to be dynamically changing
@@ -16,30 +18,53 @@ class  App extends React.Component {
     super();
     this.state = {
       products: [
-        {
-          price: 99,
-          title: 'Watch',
-          qty: 1,
-          img: '',
-          id: 1
-        },
-        {
-          price: 999,
-          title: 'Mobile Phone',
-          qty: 10,
-          img: '',
-          id: 2
-        },
-        {
-          price: 999,
-          title: 'Laptop',
-          qty: 4,
-          img: '',
-          id: 3
-        }
-      ]
+        // {
+        //   price: 99,
+        //   title: 'Watch',
+        //   qty: 1,
+        //   img: '',
+        //   id: 1
+        // },
+        // {
+        //   price: 999,
+        //   title: 'Mobile Phone',
+        //   qty: 10,
+        //   img: '',
+        //   id: 2
+        // },
+        // {
+        //   price: 999,
+        //   title: 'Laptop',
+        //   qty: 4,
+        //   img: '',
+        //   id: 3
+        // }
+      ],
+      loading:true
 }
 
+}
+
+componentDidMount(){
+  // we are going to fetch our data from firebase cloud store after component is mounted
+  // console.log("Hello")
+  firebase
+  .firestore()
+  .collection("products")
+  .get()
+  .then(snapshot=>{
+    console.log("Hello")
+    const products=snapshot.docs.map(doc=>{
+      const data=doc.data();
+      data["id"]=doc.id
+      return data;
+    });
+    console.log(products)
+    this.setState({products:products,loading:false})
+  })
+  .catch(err=>{
+    console.log(err)
+  })
 }
 
 handleIncreaseQuantity=(product)=>{
@@ -57,7 +82,7 @@ products: products
 handleDecreaseQuantity=(product)=>{
 const {products}=this.state;
 const index=products.indexOf(product);
-if(products[index].qty==0){
+if(products[index].qty===0){
 return;
 }
 
@@ -83,10 +108,10 @@ getCartCount = () => {
 
   let count = 0;
 
-  products.map((product) => {
+  products.forEach(product => {
     count += product.qty;
   })
-  console.log(count);
+  // console.log(count);
 
   return count;
 }
@@ -95,7 +120,7 @@ getPrice=()=>{
   const {products}=this.state;
 
   let price=0;
-  products.map((product)=>{
+  products.forEach(product=>{
     price+=product.qty *product.price
   })
   return price
@@ -109,16 +134,17 @@ getPrice=()=>{
   }
 
   render(){
-    const {products}=this.state;
+    const {products,loading}=this.state;
   return (
     <div className="App">
       <Navbar count={this.getCartCount()}/>
-      <CartItem />
+      {/* <CartItem /> */}
       < Cart 
       products={products}
       onIncreaseQuantity={this.handleIncreaseQuantity}
       onDecreaseQuantity={this.handleDecreaseQuantity}
       onDeleteProduct={this.handleDeleteProduct} />
+      {loading&&<h1>Loding Products....</h1>}
 
     <div style={{fontSize:20, padding:10}}>
       Total Price:{this.getPrice()}
