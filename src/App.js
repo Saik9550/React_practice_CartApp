@@ -3,6 +3,7 @@ import showalert from "./showlaertbutton"
 import Cart from "./Cart"
 import Navbar from "./Navbar"
 import React from "react"
+import firebase from 'firebase'
 
 // Note:since navbar and cart are siblings and props can only be passed from parents to children but not siblings
 // and we want the cart value in navbar to be dynamically changing
