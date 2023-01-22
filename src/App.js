@@ -50,7 +50,7 @@ componentDidMount(){
   // for reading data from firebase
   // we are going to fetch our data from firebase cloud store after component is mounted
   // console.log("Hello")
-  firebase
+  /*firebase
   .firestore()
   .collection("products")
   .get()
@@ -66,13 +66,13 @@ componentDidMount(){
   })
   .catch(err=>{
     console.log(err)
-  })
+  })*/
 
-  {
+  
     /*
     the belowcode we use onSnapshot instead of get
     onSnapshot is like a event listener which updates our page when their is a change in firebase db
-    without refreshing our page
+    without refreshing our page*/
 
   firebase
   .firestore()
@@ -87,11 +87,11 @@ componentDidMount(){
     console.log(products)
     this.setState({products:products,loading:false})
   })
-  .catch(err=>{
-    console.log(err)
-  })
-  */
-}
+  // .catch(err=>{
+  //   console.log(err)
+  // })
+
+
 
 
 }
@@ -120,9 +120,22 @@ handleIncreaseQuantity=(product)=>{
 const {products}=this.state;
 
 const index=products.indexOf(product);
-products[index].qty+=1;
-this.setState({
-products: products
+// products[index].qty+=1;
+// this.setState({
+// products: products
+// })
+
+// we are going to comment above and update the qty field in firebase
+const docRef=this.db.collection('products').doc(products[index].id);
+docRef
+.update({
+  qty:products[index].qty+1
+})
+.then(()=>{
+  console.log("Updated succesfully")
+})
+.catch((error)=>{
+  console.log(error)
 })
 
 }
@@ -134,9 +147,22 @@ if(products[index].qty===0){
 return;
 }
 
-products[index].qty-=1;
-this.setState({
-products:products
+// products[index].qty-=1;
+// this.setState({
+// products:products
+// })
+
+// we are going to comment above and update the qty field in firebase
+const docRef=this.db.collection('products').doc(products[index].id);
+docRef
+.update({
+  qty:products[index].qty-1
+})
+.then(()=>{
+  console.log("Updated succesfully")
+})
+.catch((error)=>{
+  console.log(error)
 })
 
 }
