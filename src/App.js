@@ -42,10 +42,12 @@ class  App extends React.Component {
       ],
       loading:true
 }
+this.db=firebase.firestore();
 
 }
 
 componentDidMount(){
+  // for reading data from firebase
   // we are going to fetch our data from firebase cloud store after component is mounted
   // console.log("Hello")
   firebase
@@ -65,6 +67,52 @@ componentDidMount(){
   .catch(err=>{
     console.log(err)
   })
+
+  {
+    /*
+    the belowcode we use onSnapshot instead of get
+    onSnapshot is like a event listener which updates our page when their is a change in firebase db
+    without refreshing our page
+
+  firebase
+  .firestore()
+  .collection("products")
+  .onSnapshot(snapshot=>{
+    console.log("Hello")
+    const products=snapshot.docs.map(doc=>{
+      const data=doc.data();
+      data["id"]=doc.id
+      return data;
+    });
+    console.log(products)
+    this.setState({products:products,loading:false})
+  })
+  .catch(err=>{
+    console.log(err)
+  })
+  */
+}
+
+
+}
+
+
+addProduct(){
+  // for adding  a product to firebase (this function called when add product button is clicked)
+  // instead of firebase.firestore() we can use this.db which is declared in constructor
+  firebase
+  .firestore()
+  .collection("products")
+  .add({
+    img:'',
+    qty:2,
+    price:3400,
+    title:'machine'
+  })
+  .then((docref)=>{
+    console.log("addd",docref)
+  })
+
 }
 
 handleIncreaseQuantity=(product)=>{
@@ -139,6 +187,7 @@ getPrice=()=>{
     <div className="App">
       <Navbar count={this.getCartCount()}/>
       {/* <CartItem /> */}
+      <button onClick={this.addProduct}>AddProduct</button>
       < Cart 
       products={products}
       onIncreaseQuantity={this.handleIncreaseQuantity}
