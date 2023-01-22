@@ -103,6 +103,11 @@ addProduct(){
   firebase
   .firestore()
   .collection("products")
+  // below three commented lines we can use to query the data and render accordingly
+  // .where("price", "==", 999)
+      // .where("title", "==", "Mug")
+      // .orderBy("price", "desc")
+
   .add({
     img:'',
     qty:2,
@@ -170,11 +175,22 @@ docRef
 handleDeleteProduct=(id)=>{
 const {products}=this.state;
 
-const items=products.filter((item)=>item.id!==id);
+// const items=products.filter((item)=>item.id!==id);
 
-this.setState({
-products:items
+// this.setState({
+// products:items
+// })
+
+const docRef=this.db.collection('products').doc(id);
+docRef.delete().then(()=>{
+  console.log("deleted succesfully")
 })
+.catch((error)=>{
+  console.log("deleted succesfully")
+})
+
+
+
 }
 
 getCartCount = () => {
